@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,21 @@ Route::get('/test', function(Request $request){
     return $response;
 });
 
-Route::namespace('Api')->group(function(){ // não faz sentido ter namespace pois ja está importando em cima, funciona normalmente sem esse namespace
+// não faz sentido ter namespace pois ja está importando em cima, funciona normalmente sem esse namespace
+/*Route::namespace('Api')->group(function(){ 
 
     Route::get('/products', [ProductController::class, 'index']);
 
-});
+});*/
 
 // jeito moderno: Route::get('/products', [ProductController::class, 'index']);
+
+Route::prefix('products')->group(function(){ 
+
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/{id}', [ProductController::class, 'show']);
+    Route::post('/', [ProductController::class, 'save']);
+    Route::put('/', [ProductController::class, 'update']);
+    Route::patch('/', [ProductController::class, 'update']);
+    Route::delete('/{id}', [ProductController::class, 'delete']);
+});
