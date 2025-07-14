@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    //protected $table = 'tabela'; caso queira mudar o nome da tabela que vai usar
+
     protected $fillable = [
         'name', 'price', 'description', 'slug'
     ];
