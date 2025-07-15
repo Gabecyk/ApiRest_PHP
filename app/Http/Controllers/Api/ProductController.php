@@ -21,6 +21,15 @@ class ProductController extends Controller
     {
         $products = $this->product;
 
+        if($request->has('conditions')){
+            $expressions = explode(';', $request->get('conditions'));
+
+            foreach($expressions as $e) {
+                $exp = explode(':', $e);
+                $products = $products->where($exp[0], $exp[1], $exp[2]); //campo do meio ele entende como condição
+            }
+        }
+        
         if($request->has('fields')){
             $fields = $request->get('fields');
             
