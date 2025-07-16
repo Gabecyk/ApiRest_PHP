@@ -31,18 +31,18 @@ class ProductController extends Controller
             }
         }*/
         
+        $productRepository = new ProductRepository($products);
+
         if($request->has('fields')){
-            $products = (new ProductRepository($products, $request))
-                    ->selectFilter($request->get('fields'));
+            $productRepository->selectFilter($request->get('fields'));
         }
 
-         if($request->has('conditions')){
-             $products = (new ProductRepository($products,$request))       
-                    ->selectConditions($request->get('conditions'));
-         }
+        if($request->has('conditions')){
+             $productRepository->selectConditions($request->get('conditions'));
+        }
 
         //return response()->json($products);
-        return new ProductCollection($products->paginate(10));
+        return new ProductCollection($productRepository->getResult()->paginate(10));
     }
 
     public function show($id)
